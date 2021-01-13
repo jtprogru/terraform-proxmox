@@ -1,0 +1,14 @@
+*~
+.DS_Store
+venv/
+env/
+.idea/
+__pycache__/
+.env
+.vscode/
+.terraform/
+.terraform.lock.hcl
+.terraform.tfstate.*
+terraform.tfstate
+terraform.tfstate.backup
+ansible/*.ini
