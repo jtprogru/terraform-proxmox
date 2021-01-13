@@ -1,0 +1,41 @@
+---
+- hosts: proxmox
+  gather_facts: false
+  become: true
+
+
+  tasks:
+
+    - pause:
+        seconds: 60
+
+    - name: PHASE-1 | get VM ID
+      shell: qm list | grep {{ vm }} | awk '{print $1}'
+      register: vm_id
+
+    - name: PHASE-1 | stop VM
+      shell: qm stop {{ vm_id.stdout }}
+
+    - name: PHASE-1 | wait for shut down
+      shell: qm wait {{ vm_id.stdout }}
+      async: 90
+      poll: 5
+
+    - pause:
+        seconds: 30
+
+    - name: PHASE-1 | remove cloudinit drive
+      shell: qm set {{ vm_id.stdout }} --ide2 none
+
+    - pause:
+        seconds: 30
+
+    - name: PHASE-1 | start VM
+      command: "qm start {{ vm_id.stdout }}"
+
+    - pause:
+        seconds: 40
+
+    - name: PHASE-1 | tasks completion message
+      debug:
+        msg: "{{ vm }} with ID {{ vm_id.stdout }} has been rebooted and ci drive removed"

@@ -1,0 +1,15 @@
+
+users:
+  - default
+  - name: automation-user
+    gecos: automation-user
+    primary_group: admins
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    ssh_import_id:
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa ASDFSDFASDF automation-user@example.com
+      - ssh-rsa WERTYQWERTY admin@example.com
+
+
