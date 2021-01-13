@@ -4,7 +4,7 @@
 #################
 
 resource "proxmox_vm_qemu" "infra_servers" {
-  count       = 1
+  count       = 2
   name        = "project-infra-${count.index}"
   target_node = var.proxmox_target_node
   clone       = var.proxmox_template_name
